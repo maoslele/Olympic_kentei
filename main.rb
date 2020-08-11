@@ -101,26 +101,27 @@ quizes[grade-1].each do |quiz|
   puts ""
 end
 
-def cnt_comment(score)
+def score_comment(score, grade, num)
   result = "不合格"
-case score
-when score = 1..3
-  comment = "あまり興味がなさそうです。"
-when score = 4..6
-  comment =  "オリンピックに興味がありますね！"
-when score = 7..8
-  result = "合格"
-  comment = "東京五輪公式リポーターになれそうです。"
-when score = 8..10
-  result = "合格"
-  comment = "東京五輪専門家ですね。"
-else #正答数0
-  comment = "今度あなたの興味のあることを聞かせてください。"
-end
-puts "受験結果：#{result} 「#{comment}」"
+  score_ratio = score / num.to_f * 100
+
+  case score_ratio
+  when score_ratio = 10..40
+    comment =  "一緒に応援しましょうね！"
+  when score_ratio = 50..60
+    comment = "なかなか物知りですね！"
+  when score_ratio = 70..100
+    result = "合格"
+    comment = "素晴らしいです。"
+  else #正答数0
+    comment = "残念です。今度あなたの興味のあることを聞かせてください。"
+  end
+  puts "#{grade}級受験結果： #{result}"
+  puts "正答数     ： #{score} / #{num}"
+  puts "コメント   ：「#{comment}」"
 end
 
-puts "-------------------------------------"
-puts "レベル#{}の問題が終了しました。"
-puts "正答数 #{score}/#{num}"
-cnt_comment(score)
+puts "全問題が終了しました。"
+puts line
+score_comment(score, grade, num)
+puts line
