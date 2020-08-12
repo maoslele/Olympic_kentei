@@ -11,8 +11,6 @@ TEXT
 
 puts "#{line}\n#{explanation}#{line}"
 
-print "受験する検定の級を指定してください。（1~3を入力）"
-grade = gets.chomp.to_i
 quizes = [
   [  # 1級の出題内容(全10問)
     {q:"東京オリンピックの開催競技ではない種目はどれ",
@@ -65,15 +63,29 @@ quizes = [
 num = 0
 score = 0
 
-def check_input()
-  print = "→ "#ここがなぜか表示されない
+def check_input_grade()
+  grade = gets.chomp.to_i
+  while grade
+    if grade == 1 || grade == 2 || grade == 3
+      break
+    else
+      print "1~3のいずれかを入力してください。> "
+      grade = gets.chomp.to_i
+    end
+  end
+  return grade
+end
+
+print "受験する検定の級を指定してください。（1~3を入力）> "
+grade = check_input_grade()
+
+def check_input_ans()
   ans = gets.chomp
   while ans
     if ans == "A" || ans == "B" || ans == "C"
       break
     else
-      puts "A,B,Cのいずれかを入力してください。"
-      print = "→ "
+      puts "A,B,Cのいずれかを入力してください。> "
       ans = gets.chomp
     end
   end
@@ -96,7 +108,7 @@ quizes[grade-1].each do |quiz|
   puts "Q#{num}: #{quiz[:q]}?"
   puts " A: #{quiz[:ans][:a]}\n B: #{quiz[:ans][:b]}\n C: #{quiz[:ans][:c]}"
 
-  ans = check_input()
+  ans = check_input_ans()
   score = check_ans(ans,score)
   puts ""
 end
@@ -116,9 +128,11 @@ def score_comment(score, grade, num)
   else #正答数0
     comment = "残念です。今度あなたの興味のあることを聞かせてください。"
   end
+
   puts "#{grade}級受験結果： #{result}"
   puts "正答数     ： #{score} / #{num}"
   puts "コメント   ：「#{comment}」"
+
 end
 
 puts "全問題が終了しました。"
