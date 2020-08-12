@@ -103,7 +103,7 @@ def check_ans(ans, score)
 end
 
 puts "#{grade}級の受験を開始します。全#{quizes[grade-1].size}問です。\n#{line}"
-quizes[grade-1].each do |quiz|
+quizes[grade-1].shuffle.each do |quiz|
   num += 1
   puts "Q#{num}: #{quiz[:q]}?"
   puts " A: #{quiz[:ans][:a]}\n B: #{quiz[:ans][:b]}\n C: #{quiz[:ans][:c]}"
