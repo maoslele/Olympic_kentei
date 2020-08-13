@@ -1,3 +1,5 @@
+require './check_input.rb'
+
 explanation = <<-TEXT
 
        ** 勝手に東京2020オリンピック検定 **
@@ -66,39 +68,13 @@ num = 0    #  問題番号
 score = 0  #  正答数
 grade = 0  #  受験する級
 done = 0   #  再受験判定印
-
-def check_input_grade()
-  grade = gets.chomp.to_i
-  while grade
-    if [1, 2, 3].include?(grade)
-      break
-    else
-      print "1~3のいずれかを入力してください。> "
-      grade = gets.chomp.to_i
-    end
-  end
-  return grade
-end
+result = 0 #  合否
 
 def select_grade
   print "何級を受験しますか？（1~3を入力）> "
   return check_input_grade()
 end
 grade = select_grade()
-
-def check_input_ans()
-  print " > "
-  ans = gets.chomp
-  while ans
-    if ["A", "B", "C"].include?(ans)
-      break
-    else
-      puts "A,B,Cのいずれかを入力してください。> "
-      ans = gets.chomp
-    end
-  end
-  return ans
-end
 
 def check_ans(ans, shuffle_ans, quiz_ans, score)
   ans_num = (ans == "A") ? 0 : (ans == "B" ) ? 1 : 2
@@ -116,6 +92,7 @@ def do_quiz(grade, quizes, num, score, done)
   puts "--------------------------------------------------"
   if done
     num = 0
+    score = 0
   end
   quizes[grade-1].shuffle.each do |quiz|
     num += 1
@@ -128,7 +105,6 @@ def do_quiz(grade, quizes, num, score, done)
   done = true
   return score, num
 end
-score, num = do_quiz(grade, quizes, num, score, done)
 
 def show_result(score, grade, num)
   result = "不合格"
@@ -174,28 +150,13 @@ def end_msg
   puts end_msg
 end
 
-def check_input_choice
-  choice = gets.chomp
-  while choice
-    if ["Y", "y", "N", "n"].include?(choice)
-      break
-    else
-      puts "Y / N を入力してください。> "
-      choice = gets.chomp
-    end
-  end
-  return choice
-end
-
-def decide_finish(grade, quizes, num, score, done, result)
+def choice_requiz(grade, quizes, num, score, done, result)
   if result == "合格"
-    print = "他の級を受験しますか（Y / N を入力）> "
+    print "他の級を受験しますか（Y / N を入力）> "
     choice = check_input_choice()
     if ["Y", "y"].include?(choice)
       select_grade()
-      do_quiz(grade, quizes, num, score, done)
-      result = show_result(score, grade, num)
-      decide_finish(grade, quizes, num, score, done, result)
+      quiz_proc(grade, quizes, num, score, done, result)
     else
     end_msg()
   end
@@ -203,14 +164,17 @@ def decide_finish(grade, quizes, num, score, done, result)
     print "もう一度受験しますか（Y / N を入力）> "
     choice = check_input_choice()
     if ["Y", "y"].include?(choice)
-      do_quiz(grade, quizes, num, score, done)
-      result = show_result(score, grade, num)
-      decide_finish(grade, quizes, num, score, done, result)
+      quiz_proc(grade, quizes, num, score, done, result)
     else
       end_msg()
     end
   end
 end
 
-result = show_result(score, grade, num)
-decide_finish(grade, quizes, num, score, done, result)
+def quiz_proc(grade, quizes, num, score, done, result)
+  score, num = do_quiz(grade, quizes, num, score, done)
+  result = show_result(score, grade, num)
+  choice_requiz(grade, quizes, num, score, done, result)
+end
+
+quiz_proc(grade, quizes, num, score, done, result)
