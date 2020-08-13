@@ -120,12 +120,13 @@ def show_result(score, grade, num)
 
   case score_ratio
   when score_ratio = 10..40
-    comment =  "一緒に応援しましょうね！"
+    comment =  "雑学が少し増えましたかね(笑) 一緒に応援楽しみましょう〜！"
   when score_ratio = 50..60
-    comment = "なかなか物知りですね！"
+    comment = "なかなか物知りですね！素晴らしい！"
   when score_ratio = 70..100
     result = "合格"
-    comment = "素晴らしいです。"
+    post = (grade == 1 ) ? "東京オリンピック専門家" : (grade == 2) ? "東京オリンピックリポーター" : "東京オリンピック応援団員"
+    comment = "あなたを#{post}に任命します"
   else #正答数0
     comment = "残念です。今度あなたの興味のあることを聞かせてください。"
   end
