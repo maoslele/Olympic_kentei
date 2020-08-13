@@ -1,15 +1,17 @@
-puts "** 勝手に東京2020オリンピック検定 **"
-
-line = "--------------------------------------------------"
 explanation = <<-TEXT
+
+       ** 勝手に東京2020オリンピック検定 **
+
+|------------------------------------------------|
 |検 定| 難易度 | 受けられる認定                  |
 |-----+--------+---------------------------------|
 | 1級 | ***    | 東京オリンピック専門家          |
 | 2級 | **     | 東京オリンピックリポーター      |
 | 3級 | *      | 東京オリンピック応援団員        |
+|------------------------------------------------|
 TEXT
 
-puts "#{line}\n#{explanation}#{line}"
+puts "#{explanation}"
 
 quizes = [
   [  # 1級の出題内容(全10問)
@@ -62,6 +64,8 @@ quizes = [
 
 num = 0    #  問題番号
 score = 0  #  正答数
+grade = 0  #  受験する級
+done = 0   #  実施済み判定印
 
 def check_input_grade()
   grade = gets.chomp.to_i
@@ -76,8 +80,11 @@ def check_input_grade()
   return grade
 end
 
-print "受験する検定の級を指定してください。（1~3を入力）> "
-grade = check_input_grade()
+def select_grade
+  print "何級を受験しますか？（1~3を入力）> "
+  return check_input_grade()
+end
+grade = select_grade()
 
 def check_input_ans()
   print " > "
@@ -104,15 +111,24 @@ def check_ans(ans, shuffle_ans, quiz_ans, score)
   return score
 end
 
-puts "#{grade}級の受験を開始します。全#{quizes[grade-1].size}問です。\n#{line}"
-quizes[grade-1].shuffle.each do |quiz|
-  num += 1
-  puts "\nQ#{num}: #{quiz[:q]}?"
-  shuffle_ans = quiz[:ans].shuffle.dup
-  puts " A: #{shuffle_ans[0]}\n B: #{shuffle_ans[1]}\n C: #{shuffle_ans[2]}"
-  ans = check_input_ans()
-  score = check_ans(ans, shuffle_ans, quiz[:ans], score)
+def do_quiz(grade, quizes, num, score, done)
+  puts "#{grade}級の受験を開始します。全#{quizes[grade-1].size}問です。"
+  puts "--------------------------------------------------"
+  if done
+    num = 0
+  end
+  quizes[grade-1].shuffle.each do |quiz|
+    num += 1
+    puts "\nQ#{num}: #{quiz[:q]}?"
+    shuffle_ans = quiz[:ans].shuffle.dup
+    puts " A: #{shuffle_ans[0]}\n B: #{shuffle_ans[1]}\n C: #{shuffle_ans[2]}"
+    ans = check_input_ans()
+    score = check_ans(ans, shuffle_ans, quiz[:ans], score)
+  end
+  done = true
+  return score, num
 end
+score, num = do_quiz(grade, quizes, num, score, done)
 
 def show_result(score, grade, num)
   result = "不合格"
@@ -127,17 +143,61 @@ def show_result(score, grade, num)
     result = "合格"
     post = (grade == 1 ) ? "東京オリンピック専門家" : (grade == 2) ? "東京オリンピックリポーター" : "東京オリンピック応援団員"
     comment = "あなたを#{post}に任命します"
-  else #正答数0
+  else #  正答数0
     comment = "残念です。今度あなたの興味のあることを聞かせてください。"
   end
 
-  puts "#{grade}級受験結果： #{result}"
-  puts "正答数     ： #{score} / #{num}"
-  puts "コメント   ：「#{comment}」"
+  result_msg = <<-TEXT
 
+お疲れ様でした。全問題が終了しました。
+--------------------------------------------------
+#{grade}級受験結果： #{result}
+正答数     ： #{score} / #{num}
+コメント   ：「#{comment}」
+--------------------------------------------------
+TEXT
+
+  puts result_msg
+  return result
 end
 
-puts "\n全問題が終了しました。"
-puts line
-show_result(score, grade, num)
-puts line
+def end_msg
+  end_msg = <<-TEXT
+--------------------------------------------------
+受験ありがとうございました。
+いつかコロナが落ち着いて
+東京オリンピック2020が幻とならずに、開催されることを願います。
+明るい、平和な日常が戻ってくるよう
+あなたと、あなたの大切な人の健康と幸せへの祈りを込めて。
+-------------------------------------------------- 2020.08.13
+  TEXT
+  puts end_msg
+end
+
+def decide_finish(grade, quizes, num, score, done, result)
+  if result == "合格"
+    print = "他の級を受験しますか（Y / N を入力）> "
+    choice = gets.chomp
+    if choice == "Y" || choice == "y"
+      select_grade()
+      do_quiz(grade, quizes, num, score, done)
+      result = show_result(score, grade, num)
+      decide_finish(result)
+    else
+    end_msg()
+  end
+  else #  result == "不合格"
+    print "もう一度受験しますか（Y / N を入力）> "
+    choice = gets.chomp
+    if choice == "Y" || choice == "y"
+      do_quiz(grade, quizes, num, score, done)
+      result = show_result(score, grade, num)
+      decide_finish(grade, quizes, num, score, done, result)
+    else
+      end_msg()
+    end
+  end
+end
+
+result = show_result(score, grade, num)
+decide_finish(grade, quizes, num, score, done, result)
