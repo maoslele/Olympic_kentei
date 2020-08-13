@@ -65,7 +65,7 @@ quizes = [
 num = 0    #  問題番号
 score = 0  #  正答数
 grade = 0  #  受験する級
-done = 0   #  実施済み判定印
+done = 0   #  再受験判定印
 
 def check_input_grade()
   grade = gets.chomp.to_i
@@ -174,22 +174,35 @@ def end_msg
   puts end_msg
 end
 
+def check_input_choice
+  choice = gets.chomp
+  while choice
+    if ["Y", "y", "N", "n"].include?(choice)
+      break
+    else
+      puts "Y / N を入力してください。> "
+      choice = gets.chomp
+    end
+  end
+  return choice
+end
+
 def decide_finish(grade, quizes, num, score, done, result)
   if result == "合格"
     print = "他の級を受験しますか（Y / N を入力）> "
-    choice = gets.chomp
-    if choice == "Y" || choice == "y"
+    choice = check_input_choice()
+    if ["Y", "y"].include?(choice)
       select_grade()
       do_quiz(grade, quizes, num, score, done)
       result = show_result(score, grade, num)
-      decide_finish(result)
+      decide_finish(grade, quizes, num, score, done, result)
     else
     end_msg()
   end
   else #  result == "不合格"
     print "もう一度受験しますか（Y / N を入力）> "
-    choice = gets.chomp
-    if choice == "Y" || choice == "y"
+    choice = check_input_choice()
+    if ["Y", "y"].include?(choice)
       do_quiz(grade, quizes, num, score, done)
       result = show_result(score, grade, num)
       decide_finish(grade, quizes, num, score, done, result)
