@@ -70,7 +70,7 @@ done = 0   #  再受験判定印
 def check_input_grade()
   grade = gets.chomp.to_i
   while grade
-    if grade == 1 || grade == 2 || grade == 3
+    if [1, 2, 3].include?(grade)
       break
     else
       print "1~3のいずれかを入力してください。> "
@@ -90,7 +90,7 @@ def check_input_ans()
   print " > "
   ans = gets.chomp
   while ans
-    if ans == "A" || ans == "B" || ans == "C"
+    if ["A", "B", "C"].include?(ans)
       break
     else
       puts "A,B,Cのいずれかを入力してください。> "
