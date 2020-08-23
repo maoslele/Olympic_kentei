@@ -1,39 +1,27 @@
-def check_input_grade()
+def check_input_grade
   grade = gets.chomp.to_i
-  while grade
-    if [1, 2, 3].include?(grade)
-      break
-    else
-      print "1~3のいずれかを入力してください。> "
-      grade = gets.chomp.to_i
-    end
+  unless [1, 2, 3].include?(grade)
+    print "1~3のいずれかを入力してください。> "
+    check_input_grade
   end
   return grade
 end
 
-def check_input_ans()
+def check_input_ans
   print " > "
   ans = gets.chomp
-  while ans
-    if ["A", "B", "C"].include?(ans)
-      break
-    else
-      print "A,B,Cのいずれかを入力してください。> "
-      ans = gets.chomp
-    end
+  unless ["A", "B", "C"].include?(ans.upcase)
+    print "A,B,Cのいずれかを入力してください。"
+    check_input_ans
   end
   return ans
 end
 
 def check_input_choice
   choice = gets.chomp
-  while choice
-    if ["Y", "y", "N", "n"].include?(choice)
-      break
-    else
-      print "Y / N を入力してください。> "
-      choice = gets.chomp
-    end
+  unless ["Y", "N"].include?(choice.upcase)
+    print "Y / N を入力してください。> "
+    check_input_choice
   end
   return choice
 end

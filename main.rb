@@ -1,21 +1,8 @@
-require './check_input.rb'
+require './check_input'
+require './quiz_action'
 
-explanation = <<-TEXT
-
-       ** 勝手に東京2020オリンピック検定 **
-
-|------------------------------------------------|
-|検 定| 難易度 | 受けられる認定                  |
-|-----+--------+---------------------------------|
-| 1級 | ***    | 東京オリンピック専門家          |
-| 2級 | **     | 東京オリンピックリポーター      |
-| 3級 | *      | 東京オリンピック応援団員        |
-|------------------------------------------------|
-TEXT
-
-puts "#{explanation}"
-
-quizes = [
+# 全クイズ内容
+quiz_contents = [
   [  # 1級の出題内容(全10問)
     {q:"東京オリンピックの開催競技ではない種目はどれ",
       ans:["ボウリング", "サーフィン", "空手"]},
@@ -64,117 +51,9 @@ quizes = [
   ]
 ]
 
-num = 0    #  問題番号
-score = 0  #  正答数
-grade = 0  #  受験する級
-done = 0   #  再受験判定印
-result = 0 #  合否
-
-def select_grade
-  print "何級を受験しますか？（1~3を入力）> "
-  return check_input_grade()
-end
+show_grade
 grade = select_grade()
-
-def check_ans(ans, shuffle_ans, quiz_ans, score)
-  ans_num = (ans == "A") ? 0 : (ans == "B" ) ? 1 : 2
-  if shuffle_ans[ans_num] == quiz_ans[0]
-     puts "正解です。"
-     score += 1
-  else
-    puts "不正解です。正解は#{quiz_ans[0]}です。"
-  end
-  return score
-end
-
-def do_quiz(grade, quizes, num, score, done)
-  puts "#{grade}級の受験を開始します。全#{quizes[grade-1].size}問です。"
-  puts "--------------------------------------------------"
-  if done
-    num = 0
-    score = 0
-  end
-  quizes[grade-1].shuffle.each do |quiz|
-    num += 1
-    puts "\nQ#{num}: #{quiz[:q]}?"
-    shuffle_ans = quiz[:ans].shuffle.dup
-    puts " A: #{shuffle_ans[0]}\n B: #{shuffle_ans[1]}\n C: #{shuffle_ans[2]}"
-    ans = check_input_ans()
-    score = check_ans(ans, shuffle_ans, quiz[:ans], score)
-  end
-  done = true
-  return score, num
-end
-
-def show_result(score, grade, num)
-  result = "不合格"
-  score_ratio = score / num.to_f * 100
-
-  case score_ratio
-  when score_ratio = 10..40
-    comment =  "雑学が少し増えましたかね(笑) 一緒に応援楽しみましょう〜！"
-  when score_ratio = 50..60
-    comment = "なかなか物知りですね！素晴らしい！"
-  when score_ratio = 70..100
-    result = "合格"
-    post = (grade == 1 ) ? "東京オリンピック専門家" : (grade == 2) ? "東京オリンピックリポーター" : "東京オリンピック応援団員"
-    comment = "あなたを#{post}に任命します"
-  else #  正答数0
-    comment = "残念です。今度あなたの興味のあることを聞かせてください。"
-  end
-
-  result_msg = <<-TEXT
-
-お疲れ様でした。全問題が終了しました。
---------------------------------------------------
-#{grade}級受験結果： #{result}
-正答数     ： #{score} / #{num}
-コメント   ：「#{comment}」
---------------------------------------------------
-TEXT
-
-  puts result_msg
-  return result
-end
-
-def end_msg
-  end_msg = <<-TEXT
---------------------------------------------------
-受験ありがとうございました。
-いつかコロナが落ち着いて
-東京オリンピック2020が幻とならずに、開催されることを願います。
-明るい、平和な日常が戻ってくるよう
-あなたと、あなたの大切な人の健康と幸せへの祈りを込めて。
--------------------------------------------------- 2020.08.13
-  TEXT
-  puts end_msg
-end
-
-def choice_requiz(grade, quizes, num, score, done, result)
-  if result == "合格"
-    print "他の級を受験しますか（Y / N を入力）> "
-    choice = check_input_choice()
-    if ["Y", "y"].include?(choice)
-      select_grade()
-      quiz_proc(grade, quizes, num, score, done, result)
-    else
-    end_msg()
-  end
-  else #  result == "不合格"
-    print "もう一度受験しますか（Y / N を入力）> "
-    choice = check_input_choice()
-    if ["Y", "y"].include?(choice)
-      quiz_proc(grade, quizes, num, score, done, result)
-    else
-      end_msg()
-    end
-  end
-end
-
-def quiz_proc(grade, quizes, num, score, done, result)
-  score, num = do_quiz(grade, quizes, num, score, done)
-  result = show_result(score, grade, num)
-  choice_requiz(grade, quizes, num, score, done, result)
-end
-
-quiz_proc(grade, quizes, num, score, done, result)
+quiz = Quiz.new(quiz_contents[grade-1])
+score = quiz.answer_quiz(grade)
+result = quiz.show_result(score, grade)
+quiz.choose_answer_again(grade, quiz, score, result)
