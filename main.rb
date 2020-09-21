@@ -52,7 +52,7 @@ quiz_contents = [
 ]
 
 show_grade
-grade = select_grade()
+grade = select_grade
 quiz = Quiz.new(quiz_contents[grade-1])
 score = quiz.answer_quiz(grade)
 result = quiz.show_result(score, grade)

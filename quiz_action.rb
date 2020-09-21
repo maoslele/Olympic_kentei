@@ -18,7 +18,7 @@ end
 # 受験級の選択
 def select_grade
   print "何級を受験しますか？（1~3を入力）> "
-  return check_input_grade()
+  check_input_grade
 end
 
 class Quizself
@@ -53,10 +53,10 @@ class Quiz
       puts "\nQ#{i}: #{quiz.q}?"
       shuffle_ans = quiz.ans.shuffle.dup
       puts " A: #{shuffle_ans[0]}\n B: #{shuffle_ans[1]}\n C: #{shuffle_ans[2]}"
-      ans = check_input_ans()
+      ans = check_input_ans
       score = check_ans(ans, shuffle_ans, quiz.ans, score)
     end
-    return score
+    score
   end
 
   # 解答時の正解/不正解の表示
@@ -98,7 +98,7 @@ class Quiz
       コメント   ：「#{comment}」
       --------------------------------------------------
     TEXT
-    return result
+    result
   end
 
   # 再受験選択  
@@ -108,18 +108,18 @@ class Quiz
         choice = check_input_choice()
         if ["Y"].include?(choice.upcase)
           # → 級選択して再受験
-          grade = select_grade()
+          grade = select_grade
           quiz = Quiz.new(quiz_contents[grade-1])
           score = quiz.answer_quiz(grade)
           result = quiz.show_result(score, grade)
           quiz.choose_answer_again(grade, quiz, score, result)
         else
           # → 受験終了
-          end_msg()
+          end_msg
         end
       else # result == "不合格"
         print "もう一度受験しますか（Y / N を入力）> "
-        choice = check_input_choice()
+        choice = check_input_choice
         if ["Y"].include?(choice.upcase)
           # → 不合格級を再受験
           quiz = Quiz.new(quiz_contents[grade-1])
@@ -128,7 +128,7 @@ class Quiz
           quiz.choose_answer_again(grade, quiz, score, result)
         else
           # → 受験終了
-          end_msg()
+          end_msg
         end
       end
     end

@@ -4,7 +4,7 @@ def check_input_grade
     print "1~3のいずれかを入力してください。> "
     check_input_grade
   end
-  return grade
+  grade
 end
 
 def check_input_ans
@@ -14,7 +14,7 @@ def check_input_ans
     print "A,B,Cのいずれかを入力してください。"
     check_input_ans
   end
-  return ans
+  ans
 end
 
 def check_input_choice
@@ -23,5 +23,5 @@ def check_input_choice
     print "Y / N を入力してください。> "
     check_input_choice
   end
-  return choice
+  choice
 end
