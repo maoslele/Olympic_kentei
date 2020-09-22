@@ -99,8 +99,12 @@ class Quiz
 
   # 問題の表示、解答
   def answer_quiz
-    puts "#{@grade}級の受験を開始します。全#{@selected_quiz.size}問です。"
-    puts "--------------------------------------------------"
+    puts <<~TEXT
+    --------------------------------------------------
+    #{@grade}級の受験を開始します。
+    全#{@selected_quiz.size}問です。正答率70%以上で合格です。
+    --------------------------------------------------
+    TEXT
     @score = 0
     @selected_quiz.shuffle.each.with_index(1) do |quiz, i|
       puts "\nQ#{i}: #{quiz.q}?"
