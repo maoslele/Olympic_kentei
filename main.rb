@@ -19,10 +19,5 @@ while true do
     break
   end
 
-  if quiz.result == "合格"
-    #受験級選択フラグをリセット (不合格→合格で再受験する場合のため)
-    grade_selected = false
-  elsif quiz.result == "不合格"
-    grade_selected = true
-  end
+  grade_selected = quiz.result == "合格" ?  false : true
 end
