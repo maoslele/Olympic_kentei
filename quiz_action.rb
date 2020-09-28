@@ -160,14 +160,9 @@ class Quiz
 
   # 再受験選択  
   def choose_answer_again
-      if @result == "合格"
-        print "他の級を受験しますか（Y / N を入力）> "
-        choice = check_input_choice
-      else # @result == "不合格"
-        print "もう一度受験しますか（Y / N を入力）> "
-        choice = check_input_choice
-      end
-    end
+    print @result == "合格" ? "他の級を受験しますか（Y / N を入力）> " : "もう一度受験しますか（Y / N を入力）> "
+    check_input_choice
+  end
 
     def end_msg
       puts <<~TEXT
