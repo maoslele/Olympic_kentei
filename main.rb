@@ -3,7 +3,7 @@ require './quiz_action'
 
 grade_selected = false
 
-loop do
+while true do
   if !grade_selected
     quiz = Quiz.new
     quiz.show_grade
