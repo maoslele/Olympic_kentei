@@ -1,4 +1,3 @@
-require './check_input'
 require './quiz_action'
 
 grade_selected = false

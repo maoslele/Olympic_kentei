@@ -1,3 +1,5 @@
+require './check_input'
+
 class Quizself
   attr_reader :q, :ans
   def initialize(q:, ans:)
@@ -7,6 +9,7 @@ class Quizself
 end
 
 class Quiz
+  include CheckInput
   attr_reader :selected_quiz
   attr_accessor :grade, :score, :result
 
