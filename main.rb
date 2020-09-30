@@ -7,7 +7,6 @@ while true do
     quiz = Quiz.new
     quiz.show_grade
     quiz.select_grade
-    quiz.set_quiz
   end
 
   quiz.answer_quiz

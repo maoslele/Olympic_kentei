@@ -41,6 +41,7 @@ class Quiz
   def select_grade
     print "何級を受験しますか？（1~3を入力）> "
     @grade = check_input_grade
+    set_quiz
   end
 
  # 受験級のクイズを設定
