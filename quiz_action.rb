@@ -10,8 +10,7 @@ end
 
 class Quiz
   include CheckInput
-  attr_reader :selected_quiz
-  attr_accessor :grade, :score, :result
+  attr_reader :result
 
   def initialize
     @selected_quiz = []
