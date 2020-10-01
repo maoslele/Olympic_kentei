@@ -65,7 +65,7 @@ class Quiz
 
   # 合否発表
   def show_result
-    score_ratio = score / @selected_quiz.size.to_f * 100
+    score_ratio = @score / @selected_quiz.size.to_f * 100
   
     case score_ratio
     when score_ratio = 10..40
@@ -74,7 +74,7 @@ class Quiz
       comment = "なかなか物知りですね！素晴らしい！"
     when score_ratio = 70..100
       @result = "合格"
-      post = (grade == 1 ) ? "東京オリンピック専門家" : (grade == 2) ? "東京オリンピックリポーター" : "東京オリンピック応援団員"
+      post = (@grade == 1 ) ? "東京オリンピック専門家" : (@grade == 2) ? "東京オリンピックリポーター" : "東京オリンピック応援団員"
       comment = "あなたを#{post}に任命します"
     else #  正答数0
       comment = "残念です。今度あなたの興味のあることを聞かせてください。"
