@@ -15,7 +15,7 @@ module CheckInput
       print "A,B,Cのいずれかを入力してください。"
       check_input_ans
     end
-    ans
+    ans.upcase
   end
 
   def check_input_choice
