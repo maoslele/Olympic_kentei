@@ -1,29 +1,31 @@
 module CheckInput
   def check_input_grade
-    grade = gets.chomp.to_i
-    unless [1, 2, 3].include?(grade)
+    loop do
+      grade = gets.chomp.to_i
+      if [1, 2, 3].include?(grade)
+        return grade
+      end
       print "1~3のいずれかを入力してください。> "
-      check_input_grade
     end
-    grade
   end
 
   def check_input_ans
-    print " > "
-    ans = gets.chomp
-    unless ["A", "B", "C"].include?(ans.upcase)
-      print "A,B,Cのいずれかを入力してください。"
-      check_input_ans
+    loop do
+      print " > "
+      ans = gets.chomp
+      if ["A", "B", "C"].include?(ans.upcase)
+        return ans.upcase
+      end
     end
-    ans.upcase
   end
 
   def check_input_choice
-    choice = gets.chomp
-    unless ["Y", "N"].include?(choice.upcase)
+    loop do
+      choice = gets.chomp
       print "Y / N を入力してください。> "
-      check_input_choice
+      if ["Y", "N"].include?(choice.upcase)
+        return choice.upcase
+      end
     end
-    choice
   end
 end
