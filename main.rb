@@ -13,7 +13,7 @@ while true do
   quiz.show_result
   choice = quiz.choose_answer_again
 
-  if choice.upcase == "N"
+  if choice == "N"
     quiz.end_msg
     break
   end
