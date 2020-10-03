@@ -27,7 +27,7 @@ $ cd Olympic_kentei
 $ ruby main.rb  
 
 ## 作成者
-瀬川 真央
+瀬川 真央  
 Email: m01.sgwk@gmail.com
 
 ## ライセンス
