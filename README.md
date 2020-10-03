@@ -26,6 +26,13 @@ $ git clone https://github.com/maoslele/Olympic_kentei.git
 $ cd Olympic_kentei  
 $ ruby main.rb  
 
+## フローチャート
+https://github.com/maoslele/Olympic_kentei/wiki/Flow-chart
+
+## 参考資料
+以下、検定試験の出題内容元のURL一覧  
+https://github.com/maoslele/Olympic_kentei/wiki/reference
+
 ## 作成者
 瀬川 真央  
 Email: m01.sgwk@gmail.com
