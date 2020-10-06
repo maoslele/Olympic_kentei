@@ -178,16 +178,4 @@ private
     @selected_quiz
   end
 
-  # 解答時の正解/不正解の表示
-  def check_ans(ans, shuffle_ans, quiz_ans)
-    ans_num = (ans == "A") ? 0 : (ans == "B" ) ? 1 : 2
-    if shuffle_ans[ans_num] == quiz_ans[0]
-      puts "正解です。"
-      @score += 1
-    else
-      puts "不正解です。正解は#{quiz_ans[0]}です。"
-    end
-    @score
-  end
-
 end
