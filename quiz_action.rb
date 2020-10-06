@@ -41,7 +41,7 @@ class Quiz
   def select_grade
     print "何級を受験しますか？（1~3を入力）> "
     @grade = check_input_grade
-    set_quiz
+    @selected_quiz = select_quiz(@grade)
   end
 
   # 問題の表示、解答
@@ -122,7 +122,7 @@ class Quiz
 
 private
 # 受験級のクイズを設定
-  def set_quiz
+  def select_quiz(grade)
     # 全クイズ内容
     quiz_contents = [
       [  # 1級の出題内容(全10問)
@@ -172,7 +172,7 @@ private
           ans:["新国立競技場", "武道館", "東京ドーム"]},
       ]
     ]
-    quiz_contents[@grade-1].each do |quiz|
+    quiz_contents[grade-1].each do |quiz|
       @selected_quiz << Quizself.new(**quiz)
     end
     @selected_quiz
