@@ -22,10 +22,12 @@ module CheckInput
   def check_input_choice
     loop do
       choice = gets.chomp
-      print "Y / N を入力してください。> "
-      if ["Y", "N"].include?(choice.upcase)
-        return choice.upcase
+      if choice.upcase == "Y"
+        return false
+      elsif choice.upcase == "N"
+        return true
       end
+      print "Y / N を入力してください。> "
     end
   end
 end

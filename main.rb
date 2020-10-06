@@ -11,9 +11,7 @@ while true do
 
   quiz.answer_quiz
   quiz.show_result
-  choice = quiz.choose_answer_again
-
-  if choice == "N"
+  if quiz.answer_again?
     quiz.end_msg
     break
   end

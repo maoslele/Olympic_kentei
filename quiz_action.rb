@@ -91,7 +91,7 @@ class Quiz
   end
 
   # 再受験選択  
-  def choose_answer_again
+  def answer_again?
     print @result == "合格" ? "他の級を受験しますか（Y / N を入力）> " : "もう一度受験しますか（Y / N を入力）> "
     check_input_choice
   end
