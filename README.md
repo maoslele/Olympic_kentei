@@ -31,7 +31,7 @@ https://github.com/maoslele/Olympic_kentei/wiki/Flow-chart
 
 ## 参考資料
 以下、検定試験の出題内容元のURL一覧  
-https://github.com/maoslele/Olympic_kentei/wiki/reference
+https://github.com/maoslele/Olympic_kentei/wiki/Reference
 
 ## 作成背景  
 #### きっかけ  
@@ -48,7 +48,8 @@ Rubyで応用できないか？と思い、クイズを選びました。
 リファクタリングを通して、以下の理解を深めました。  
 - クラス概念、インスタンス変数、スコープ、モジュール  
 - whileとloopのスコープの違い、アクセサ  
-- 可読性を意識した、メソッドの配置、クラスの使い方、分岐処理の作り方  
+- 可読性を意識した、メソッドの配置、クラスの使い方、分岐処理の作り方
+- binding.pryでのデバッグ方法  
 
 理解が曖昧だった部分が浮き彫りになり、躓きましたが  
 インプットとアウトプットを繰り返して改善していく楽しさを感じました。  
