@@ -31,14 +31,17 @@ module CheckInput
   end
 
   def check_input_choice
+    bool = true
     loop do
       choice = gets.chomp
       if choice.upcase == "Y"
-        return false
+        bool = false
+        break
       elsif choice.upcase == "N"
-        return true
+        break
       end
       print "Y / N を入力してください。> "
     end
+    bool
   end
 end
